@@ -48,13 +48,32 @@ def duration_in_hours(minutes):
     mins = minutes % 60
     return f"{hours}ч {mins}м"
 
+def rating_tier(rating):
+    if rating >= 9:
+        return "шедевр"
+    elif rating >= 7:
+        return "хорошо"
+    else:
+        return "средне" if rating >= 5 else "слабо"
+
+def decade_label(year):
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if year >= 2015:
+            return "недавние"
+        case _:
+            return "старые"
+
 def main():
     print("Hello from striming-catalog!")
     print(average_rating(movies))
     print(catalog_age_stats(movies))
     print(duration_in_hours(155))
     print(duration_in_hours(89))
-
+    print(rating_tier(9.2), rating_tier(9.0), rating_tier(8.9), rating_tier(7.0))
+    print(rating_tier(6.9), rating_tier(5.0), rating_tier(4.8))
+    print(decade_label(2021), decade_label(2020), decade_label(2015),decade_label(2014))
 
 if __name__ == "__main__":
     main()
