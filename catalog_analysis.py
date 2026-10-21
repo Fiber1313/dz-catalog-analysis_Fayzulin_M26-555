@@ -88,6 +88,24 @@ def count_long_movies(movies, threshold=120):
             count = count + 1
     return count
 
+def normalize_title(title):
+    words = title.split(" ")
+    new_words = []
+    for word in words:
+        new_words.append(word[0].upper() + word[1:])
+    return " ".join(new_words)
+
+def make_slug(title):
+    return title.lower().replace(" ", "-")
+
+def format_report_line(movie):
+    title = normalize_title(movie["title"])
+    year = movie["year"]
+    rating = movie["rating"]
+    duration = duration_in_hours(movie["duration_min"])
+    genres = ", ".join(sorted(movie["genres"]))
+    return f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres}'
+
 def main():
     print("Hello from striming-catalog!")
     print(average_rating(movies))
@@ -102,6 +120,12 @@ def main():
     find_shedevr(movies[:7])
     print(count_long_movies(movies))
     print(count_long_movies(movies, 100))
+    print(normalize_title("silent hours"))
+    print(normalize_title("midnight in oslo"))
+    print(make_slug("Silent Hours"))
+    print(make_slug(normalize_title("the quiet algorithm")))
+    print(format_report_line(movies[7]))
+    print(format_report_line(movies[5]))
 
 if __name__ == "__main__":
     main()
