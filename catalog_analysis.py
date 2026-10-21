@@ -106,6 +106,27 @@ def format_report_line(movie):
     genres = ", ".join(sorted(movie["genres"]))
     return f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres}'
 
+def get_rating(movie):
+    return movie["rating"]
+
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(movies, key=get_rating, reverse=True)
+    titles = []
+    for x in sorted_movies:
+        titles.append(x["title"])
+    return titles  
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(movies, key=get_rating, reverse=True)
+    name = []
+    rate = []
+    for x in sorted_movies:
+        name.append(x["title"])
+        rate.append(x["rating"])
+    name_rate = list(zip(name, rate))
+    return name_rate[:n]
+
+    
 def main():
     print("Hello from striming-catalog!")
     print(average_rating(movies))
@@ -126,6 +147,8 @@ def main():
     print(make_slug(normalize_title("the quiet algorithm")))
     print(format_report_line(movies[7]))
     print(format_report_line(movies[5]))
+    print(titles_sorted_by_rating(movies))
+    print(top_n_by_rating(movies, ))
 
 if __name__ == "__main__":
     main()
