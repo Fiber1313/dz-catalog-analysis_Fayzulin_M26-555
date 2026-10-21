@@ -65,6 +65,29 @@ def decade_label(year):
         case _:
             return "старые"
 
+def titles_not_comedy(movies):
+ for movie in movies:
+        if "comedy" in movie["genres"]:
+            continue
+        print(movie["title"])
+
+def find_shedevr(movies):
+    i = 0
+    while i < len(movies):
+        if movies[i]["rating"] > 9.0:
+            print("Первый шедевр:", movies[i]["title"])
+            break
+        i = i + 1
+    else:
+        print("Шедевров не найдено")
+
+def count_long_movies(movies, threshold=120):
+    count = 0
+    for movie in movies:
+        if movie["duration_min"] > threshold:
+            count = count + 1
+    return count
+
 def main():
     print("Hello from striming-catalog!")
     print(average_rating(movies))
@@ -74,6 +97,11 @@ def main():
     print(rating_tier(9.2), rating_tier(9.0), rating_tier(8.9), rating_tier(7.0))
     print(rating_tier(6.9), rating_tier(5.0), rating_tier(4.8))
     print(decade_label(2021), decade_label(2020), decade_label(2015),decade_label(2014))
+    print(titles_not_comedy(movies))
+    find_shedevr(movies)
+    find_shedevr(movies[:7])
+    print(count_long_movies(movies))
+    print(count_long_movies(movies, 100))
 
 if __name__ == "__main__":
     main()
