@@ -126,7 +126,26 @@ def top_n_by_rating(movies, n=3):
     name_rate = list(zip(name, rate))
     return name_rate[:n]
 
-    
+def count_by_genre(movies):
+    counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            counts[genre] = counts.get(genre, 0) + 1
+    return counts
+
+def actor_filmography(movies):
+    actor_film = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            lst_films = actor_film.get(actor, [])
+            lst_films.append(movie["title"])
+            actor_film[actor] = lst_films
+    return actor_film
+
+def above_average_ratings(movies):
+    avg = average_rating(movies)
+    return {n["title"]: n["rating"]  for n in movies if n["rating"] > avg}
+
 def main():
     print("Hello from striming-catalog!")
     print(average_rating(movies))
@@ -149,6 +168,9 @@ def main():
     print(format_report_line(movies[5]))
     print(titles_sorted_by_rating(movies))
     print(top_n_by_rating(movies, ))
+    print(count_by_genre(movies))
+    print(actor_filmography(movies))
+    print(above_average_ratings(movies))
 
 if __name__ == "__main__":
     main()
