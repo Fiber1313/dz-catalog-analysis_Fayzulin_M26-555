@@ -146,6 +146,20 @@ def above_average_ratings(movies):
     avg = average_rating(movies)
     return {n["title"]: n["rating"]  for n in movies if n["rating"] > avg}
 
+def all_genres(movies):
+    genres = set()
+    for movie in movies:
+        genres = genres | movie["genres"]
+    return genres
+
+def common_actors(movie1, movie2):
+    actors1 = set(movie1["actors"])
+    actors2 = set(movie2["actors"])
+    return actors1 & actors2
+
+def genres_only_in_one(movies_a, movies_b):
+    return all_genres(movies_a) - all_genres(movies_b)
+
 def main():
     print("Hello from striming-catalog!")
     print(average_rating(movies))
@@ -171,6 +185,9 @@ def main():
     print(count_by_genre(movies))
     print(actor_filmography(movies))
     print(above_average_ratings(movies))
+    print(all_genres(movies))
+    print(common_actors(movies[0],movies[3] ))
+    print(genres_only_in_one(movies[5:6],movies[:5]))
 
 if __name__ == "__main__":
     main()
